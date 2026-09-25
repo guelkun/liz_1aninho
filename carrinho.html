@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mimos da Liz - Finalizar Mimo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Fredoka:wght@400;600&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg-aquarela: #FDF6F0;
+      --papel-card: #FFFDF9;
+      --terracota-suave: #C86D51;
+      --verde-folha: #528E74;
+      --texto: #4A3E3D;
+      --sombra-papel: 0 8px 20px rgba(180, 140, 130, 0.12);
+    }
+
+    body {
+      font-family: 'Quicksand', sans-serif;
+      background-color: var(--bg-aquarela);
+      color: var(--texto);
+      padding: 20px;
+      padding-bottom: 60px;
+    }
+
+    .container { max-width: 650px; margin: 0 auto; }
+
+    .btn-voltar {
+      display: inline-block;
+      text-decoration: none;
+      color: var(--terracota-suave);
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .cabecalho-carrinho { text-align: center; margin-bottom: 25px; }
+    .cabecalho-carrinho h1 {
+      font-family: 'Caveat', cursive;
+      font-size: 3rem;
+      color: var(--terracota-suave);
+    }
+
+    .card-papel {
+      background: var(--papel-card);
+      border-radius: 20px;
+      padding: 25px;
+      margin-bottom: 20px;
+      border: 1px dashed #EAD5CB;
+      box-shadow: var(--sombra-papel);
+    }
+
+    .card-papel h2 {
+      font-family: 'Fredoka', cursive;
+      font-size: 1.3rem;
+      color: var(--terracota-suave);
+      margin-bottom: 15px;
+    }
+
+    .item-carrinho {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px dashed #EAD5CB;
+    }
+
+    .item-carrinho:last-child { border-bottom: none; }
+
+    .info-item h4 { font-size: 1rem; color: var(--texto); }
+    .info-item span { font-size: 0.9rem; font-weight: 700; color: var(--terracota-suave); }
+
+    .btn-remover {
+      background: transparent;
+      border: none;
+      color: #D16B58;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      padding: 5px 10px;
+      border-radius: 12px;
+      transition: background 0.2s ease;
+    }
+
+    .btn-remover:hover { background: #FDF1ED; }
+
+    .total-caixa {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 15px;
+      padding-top: 15px;
+      border-top: 2px solid #EAD5CB;
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+
+    .total-caixa span { color: var(--terracota-suave); }
+
+    .campo-grupo {
+      margin-bottom: 15px;
+      text-align: left;
+    }
+
+    .campo-grupo label {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: var(--texto);
+    }
+
+    .campo-grupo input, .campo-grupo textarea {
+      width: 100%;
+      padding: 12px 15px;
+      border-radius: 12px;
+      border: 1px solid #EAD5CB;
+      background: #FFFFFF;
+      font-family: 'Quicksand', sans-serif;
+      font-size: 0.95rem;
+      color: var(--texto);
+      outline: none;
+      transition: border-color 0.2s ease;
+    }
+
+    .campo-grupo input.erro-campo {
+      border-color: #D16B58;
+      background-color: #FFF2F0;
+    }
+
+    .campo-grupo textarea { resize: vertical; min-height: 80px; }
+
+    .opcoes-pagamento {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .btn-pagamento {
+      display: block;
+      width: 100%;
+      padding: 15px;
+      border-radius: 30px;
+      border: none;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      box-shadow: var(--sombra-papel);
+    }
+
+    .btn-pix { background: var(--verde-folha); color: #FFF; }
+    .btn-cartao { background: var(--terracota-suave); color: #FFF; }
+
+    /* MODAIS */
+    .modal-generica {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+      padding: 20px;
+    }
+
+    .modal-generica.ativo { display: flex; }
+
+    .conteudo-modal {
+      background: var(--papel-card);
+      padding: 30px 20px;
+      border-radius: 24px;
+      max-width: 420px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      border: 1px dashed #EAD5CB;
+      position: relative;
+    }
+
+    .conteudo-modal h3 {
+      font-family: 'Fredoka', cursive;
+      color: var(--terracota-suave);
+      margin-bottom: 10px;
+    }
+
+    .conteudo-modal p {
+      font-size: 0.92rem;
+      color: #6A5856;
+      margin-bottom: 12px;
+      line-height: 1.4;
+    }
+
+    .img-qrcode {
+      width: 200px;
+      height: 200px;
+      object-fit: contain;
+      border-radius: 12px;
+      border: 1px solid #EAD5CB;
+      margin-bottom: 12px;
+    }
+
+    .chave-pix-box {
+      background: #FDF1ED;
+      padding: 10px;
+      border-radius: 12px;
+      font-size: 0.8rem;
+      word-break: break-all;
+      border: 1px solid #F0DAD3;
+      margin-bottom: 12px;
+      color: var(--texto);
+    }
+
+    .info-banco {
+      font-size: 0.82rem;
+      color: #6A5856;
+      margin-bottom: 15px;
+      line-height: 1.4;
+    }
+
+    /* ESTIMATIVA / CALCULADORA CARTÃO */
+    .box-simulador-cartao {
+      background: #FDF1ED;
+      border: 1px solid #F0DAD3;
+      border-radius: 16px;
+      padding: 15px;
+      margin: 15px 0;
+      text-align: left;
+    }
+
+    .box-simulador-cartao label {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--texto);
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .select-parcelas {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid #EAD5CB;
+      background: #FFF;
+      font-family: 'Quicksand', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--texto);
+      outline: none;
+      margin-bottom: 12px;
+    }
+
+    .resultado-simulacao {
+      background: #FFF;
+      border-radius: 12px;
+      padding: 12px;
+      font-size: 0.9rem;
+      border: 1px dashed #EAD5CB;
+      line-height: 1.5;
+    }
+
+    .resultado-simulacao strong { color: var(--terracota-suave); }
+
+    .btn-acao-modal {
+      background: var(--terracota-suave);
+      color: #FFF;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 25px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      display: inline-block;
+      text-decoration: none;
+      width: 100%;
+      margin-bottom: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    .btn-fechar-modal {
+      background: transparent;
+      border: none;
+      color: #888;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: block;
+      margin: 10px auto 0 auto;
+    }
+
+    /* BALÃOZINHO / TOAST NOTIFICATION */
+    .toast-notificacao {
+      visibility: hidden;
+      min-width: 250px;
+      background-color: var(--verde-folha);
+      color: #fff;
+      text-align: center;
+      border-radius: 25px;
+      padding: 12px 20px;
+      position: fixed;
+      z-index: 3000;
+      left: 50%;
+      bottom: 30px;
+      transform: translateX(-50%);
+      font-size: 0.9rem;
+      font-weight: 700;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+      opacity: 0;
+      transition: opacity 0.3s ease, bottom 0.3s ease;
+    }
+
+    .toast-notificacao.exibir {
+      visibility: visible;
+      opacity: 1;
+      bottom: 40px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <a href="loja.html" class="btn-voltar">Voltar para a lojinha</a>
+
+    <header class="cabecalho-carrinho">
+      <h1>Seus Mimos Escolhidos</h1>
+    </header>
+
+    <section class="card-papel">
+      <h2>Resumo da Seleção</h2>
+      <div id="lista-carrinho"></div>
+
+      <div class="total-caixa">
+        <span>Total:</span>
+        <span id="valor-total-carrinho">R$ 0,00</span>
+      </div>
+    </section>
+
+    <section class="card-papel">
+      <h2>Identificação e Recadinho</h2>
+      <div class="campo-grupo">
+        <label for="nome-convidado">Seu Nome / Família: <span style="color:var(--terracota-suave);">*</span></label>
+        <input type="text" id="nome-convidado" placeholder="Ex: Titia Ana e Família">
+      </div>
+
+      <div class="campo-grupo">
+        <label for="mensagem-liz">Mensagem para a Liz:</label>
+        <textarea id="mensagem-liz" placeholder="Escreva uma mensagem carinhosa para guardar de recordação..."></textarea>
+      </div>
+    </section>
+
+    <section class="card-papel">
+      <h2>Forma de Pagamento</h2>
+      <div class="opcoes-pagamento">
+        <button class="btn-pagamento btn-pix" onclick="abrirModalPix()">Pagar via Pix (Sem Taxa)</button>
+        <button class="btn-pagamento btn-cartao" onclick="abrirModalCartao()">Pagar no Cartão (Mercado Pago)</button>
+      </div>
+    </section>
+  </div>
+
+  <!-- MODAL PIX -->
+  <div class="modal-generica" id="modal-pix">
+    <div class="conteudo-modal">
+      <h3>Pagamento via Pix</h3>
+      
+      <p id="instrucao-pix">
+        Escaneie o QR Code abaixo ou copie a chave aleatória informando o valor dos mimos escolhidos:
+      </p>
+
+      <img src="imgs/qrcode_pix.jpeg" alt="QR Code Pix" class="img-qrcode">
+
+      <div class="chave-pix-box" id="chave-pix-texto">
+        b16d8c04-b03c-4504-9b49-81fffd140939
+      </div>
+
+      <div class="info-banco">
+        Titular: <strong>Liz Rodrigues Ferreira</strong><br>
+        Banco: <strong>Banco Inter S.A.</strong>
+      </div>
+
+      <button class="btn-acao-modal" onclick="copiarChavePix()">Copiar Chave Pix</button>
+      <button class="btn-fechar-modal" onclick="fecharModal('modal-pix')">Fechar</button>
+    </div>
+  </div>
+
+  <!-- MODAL CARTÃO DE CRÉDITO COM SIMULADOR COMPACTO -->
+  <div class="modal-generica" id="modal-cartao">
+    <div class="conteudo-modal">
+      <h3>Pagamento no Cartão</h3>
+      
+      <p>Você será redirecionado para o checkout seguro do Mercado Pago.</p>
+      
+      <p id="instrucao-valor-cartao" style="font-size:0.95rem; color:var(--terracota-suave); font-weight:700; margin-bottom:15px;">
+        <!-- Preenchido dinamicamente com o valor exato dos mimos -->
+      </p>
+
+      <div class="box-simulador-cartao">
+        <label for="select-parcelamento">Simular Parcelamento no Cartão:</label>
+        <select id="select-parcelamento" class="select-parcelas" onchange="calcularSimulacaoCartao()">
+          <!-- Preenchido via JavaScript -->
+        </select>
+
+        <div class="resultado-simulacao" id="resultado-simulacao">
+          <!-- Exibe valor dos mimos, parcelas e total com taxas -->
+        </div>
+      </div>
+
+      <a href="https://link.mercadopago.com.br/1aninholiz" target="_blank" class="btn-acao-modal">Ir para o Mercado Pago</a>
+      <button class="btn-fechar-modal" onclick="fecharModal('modal-cartao')">Voltar</button>
+    </div>
+  </div>
+
+  <!-- BALÃOZINHO DE NOTIFICAÇÃO -->
+  <div id="toast" class="toast-notificacao">Chave Pix copiada com sucesso!</div>
+
+  <script>
+    let carrinho = JSON.parse(localStorage.getItem('carrinhoLiz')) || [];
+
+    // TABELA DE TAXAS DO CLIENTE MERCADO PAGO
+    const taxasMercadoPago = {
+      1: 0.00,    // 1x À vista
+      2: 0.0964,  // 9,64%
+      3: 0.1123,  // 11,23%
+      4: 0.1136,  // 11,36%
+      5: 0.1431,  // 14,31%
+      6: 0.1432,  // 14,32%
+      7: 0.1672,  // 16,72%
+      8: 0.1673,  // 16,73%
+      9: 0.1969,  // 19,69%
+      10: 0.2065, // 20,65%
+      11: 0.2066, // 20,66%
+      12: 0.2211, // 22,11%
+      13: 0.2304, // 23,04%
+      14: 0.2445, // 24,45%
+      15: 0.2583, // 25,83%
+      16: 0.2720, // 27,20%
+      17: 0.2858, // 28,58%
+      18: 0.2999  // 29,99%
+    };
+
+    document.addEventListener("DOMContentLoaded", () => {
+      renderizarCarrinho();
+
+      const inputNome = document.getElementById('nome-convidado');
+      if (inputNome) {
+        inputNome.addEventListener('input', () => {
+          inputNome.classList.remove('erro-campo');
+        });
+      }
+    });
+
+    function renderizarCarrinho() {
+      const container = document.getElementById('lista-carrinho');
+      if (!container) return;
+      
+      container.innerHTML = '';
+
+      if (carrinho.length === 0) {
+        container.innerHTML = '<p style="text-align:center; color:#888;">Nenhum mimo selecionado no momento.</p>';
+        document.getElementById('valor-total-carrinho').innerText = 'R$ 0,00';
+        return;
+      }
+
+      let total = 0;
+
+      carrinho.forEach((item, index) => {
+        total += item.preco;
+
+        const divItem = document.createElement('div');
+        divItem.className = 'item-carrinho';
+        divItem.innerHTML = `
+          <div class="info-item">
+            <h4>${item.nome}</h4>
+            <span>R$ ${item.preco.toFixed(2).replace('.', ',')}</span>
+          </div>
+          <button class="btn-remover" onclick="removerItem(${index})">Remover</button>
+        `;
+        container.appendChild(divItem);
+      });
+
+      document.getElementById('valor-total-carrinho').innerText = 'R$ ' + total.toFixed(2).replace('.', ',');
+    }
+
+    function removerItem(index) {
+      carrinho.splice(index, 1);
+      localStorage.setItem('carrinhoLiz', JSON.stringify(carrinho));
+      renderizarCarrinho();
+    }
+
+    function obterTotalCarrinho() {
+      let total = 0;
+      carrinho.forEach(item => total += item.preco);
+      return total;
+    }
+
+    function validarFormulario() {
+      if (carrinho.length === 0) {
+        exibirToast("Escolha ao menos um mimo na lojinha!");
+        return false;
+      }
+
+      const inputNome = document.getElementById('nome-convidado');
+      const nomeDigitado = inputNome ? inputNome.value.trim() : '';
+
+      if (!nomeDigitado) {
+        if (inputNome) {
+          inputNome.classList.add('erro-campo');
+          inputNome.focus();
+        }
+        exibirToast("Por favor, preencha seu nome ou família!");
+        return false;
+      }
+
+      return true;
+    }
+
+    function abrirModalPix() {
+      if (!validarFormulario()) return;
+
+      const total = obterTotalCarrinho();
+      const valorFormatado = 'R$ ' + total.toFixed(2).replace('.', ',');
+
+      const instrucaoPix = document.getElementById('instrucao-pix');
+      if (instrucaoPix) {
+        instrucaoPix.innerHTML = `Escaneie o QR Code abaixo ou copie a chave aleatória informando o valor de <strong style="color:var(--terracota-suave);">${valorFormatado}</strong> referente aos mimos escolhidos:`;
+      }
+
+      const modal = document.getElementById('modal-pix');
+      if (modal) modal.classList.add('ativo');
+    }
+
+    function abrirModalCartao() {
+      if (!validarFormulario()) return;
+
+      const total = obterTotalCarrinho();
+      const valorFormatado = 'R$ ' + total.toFixed(2).replace('.', ',');
+
+      const instrucaoCartao = document.getElementById('instrucao-valor-cartao');
+      if (instrucaoCartao) {
+        instrucaoCartao.innerHTML = `Ao abrir o link, digite o valor de <strong>${valorFormatado}</strong> (valor dos mimos escolhidos).`;
+      }
+
+      const select = document.getElementById('select-parcelamento');
+      select.innerHTML = '';
+
+      for (let i = 1; i <= 18; i++) {
+        const option = document.createElement('option');
+        option.value = i;
+        option.innerText = i === 1 ? '1x À vista (sem acréscimo)' : `${i}x no Cartão`;
+        select.appendChild(option);
+      }
+
+      calcularSimulacaoCartao();
+
+      const modal = document.getElementById('modal-cartao');
+      if (modal) modal.classList.add('ativo');
+    }
+
+    function calcularSimulacaoCartao() {
+      const totalOriginal = obterTotalCarrinho();
+      const parcelas = parseInt(document.getElementById('select-parcelamento').value) || 1;
+      const taxa = taxasMercadoPago[parcelas] || 0;
+
+      const valorTotalComTaxa = totalOriginal * (1 + taxa);
+      const valorPorParcela = valorTotalComTaxa / parcelas;
+
+      const resBox = document.getElementById('resultado-simulacao');
+      if (resBox) {
+        if (parcelas === 1) {
+          resBox.innerHTML = `
+            <div style="font-size:0.85rem; color:#6A5856; margin-bottom:4px;">Valor dos mimos escolhidos: <strong>R$ ${totalOriginal.toFixed(2).replace('.', ',')}</strong></div>
+            <strong>Pagamento à vista: R$ ${totalOriginal.toFixed(2).replace('.', ',')}</strong>
+          `;
+        } else {
+          resBox.innerHTML = `
+            <div style="font-size:0.85rem; color:#6A5856; margin-bottom:4px;">Valor dos mimos escolhidos: <strong>R$ ${totalOriginal.toFixed(2).replace('.', ',')}</strong></div>
+            <strong style="font-size:1.05rem;">${parcelas}x de R$ ${valorPorParcela.toFixed(2).replace('.', ',')}</strong><br>
+            <span style="font-size:0.8rem; color:#6A5856;">Total com taxas: R$ ${valorTotalComTaxa.toFixed(2).replace('.', ',')}</span>
+          `;
+        }
+      }
+    }
+
+    function fecharModal(idModal) {
+      const modal = document.getElementById(idModal);
+      if (modal) modal.classList.remove('ativo');
+    }
+
+    function copiarChavePix() {
+      const elementoChave = document.getElementById('chave-pix-texto');
+      const chave = elementoChave ? elementoChave.innerText.trim() : "b16d8c04-b03c-4504-9b49-81fffd140939";
+
+      navigator.clipboard.writeText(chave).then(() => {
+        exibirToast("Chave Pix copiada com sucesso!");
+      }).catch(err => {
+        exibirToast("Erro ao copiar chave.");
+      });
+    }
+
+    function exibirToast(mensagem) {
+      let toast = document.getElementById("toast");
+      
+      if (!toast) {
+        toast = document.createElement("div");
+        toast.id = "toast";
+        toast.className = "toast-notificacao";
+        document.body.appendChild(toast);
+      }
+
+      toast.innerText = mensagem;
+      toast.classList.add("exibir");
+
+      setTimeout(() => {
+        toast.classList.remove("exibir");
+      }, 3000);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mimos da Liz</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Fredoka:wght@400;600&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg-aquarela: #FDF6F0;
+      --papel-card: #FFFDF9;
+      --terracota-suave: #C86D51;
+      --verde-folha: #528E74;
+      --texto: #4A3E3D;
+      --sombra-papel: 0 8px 20px rgba(180, 140, 130, 0.12);
+    }
+
+    body {
+      font-family: 'Quicksand', sans-serif;
+      background-color: var(--bg-aquarela);
+      color: var(--texto);
+      padding: 20px 20px 100px 20px;
+    }
+
+    .container { max-width: 900px; margin: 0 auto; }
+
+    .btn-voltar {
+      display: inline-block;
+      text-decoration: none;
+      color: var(--terracota-suave);
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .cabecalho-loja { text-align: center; margin-bottom: 25px; }
+    .cabecalho-loja h1 {
+      font-family: 'Caveat', cursive;
+      font-size: 3rem;
+      color: var(--terracota-suave);
+    }
+
+    .card-info-top {
+      background: var(--papel-card);
+      border-radius: 20px;
+      padding: 20px;
+      margin-bottom: 25px;
+      border: 1px dashed #EAD5CB;
+      box-shadow: var(--sombra-papel);
+      text-align: center;
+    }
+
+    .card-info-top p {
+      font-size: 0.98rem;
+      line-height: 1.6;
+      color: #6A5856;
+      margin-bottom: 12px;
+    }
+
+    .card-info-top ul {
+      list-style: none;
+      text-align: left;
+      display: inline-block;
+      margin: 5px 0 15px 0;
+    }
+
+    .card-info-top li {
+      font-size: 0.95rem;
+      color: var(--texto);
+      margin-bottom: 8px;
+      line-height: 1.5;
+    }
+
+    .card-info-top li strong { color: var(--terracota-suave); }
+
+    .box-tamanhos {
+      background: #FDF1ED;
+      border-radius: 12px;
+      padding: 12px 15px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+      border: 1px solid #F0DAD3;
+    }
+
+    .item-tamanho {
+      font-size: 0.9rem;
+      color: var(--texto);
+    }
+
+    .item-tamanho strong {
+      color: var(--terracota-suave);
+    }
+
+    .filtros-categoria {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 15px;
+    }
+
+    .btn-filtro {
+      background: #FFFFFF;
+      border: 1px dashed #EAD5CB;
+      color: var(--texto);
+      padding: 10px 18px;
+      border-radius: 25px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+
+    .btn-filtro.ativo {
+      background-color: var(--terracota-suave);
+      color: #FFFFFF;
+      border-color: var(--terracota-suave);
+    }
+
+    .barra-ordenacao {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 25px;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .select-ordenacao {
+      padding: 8px 14px;
+      border-radius: 20px;
+      border: 1px solid #EAD5CB;
+      background: #FFF;
+      color: var(--texto);
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 600;
+      cursor: pointer;
+      outline: none;
+    }
+
+    .grid-produtos {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .card-produto {
+      background: var(--papel-card);
+      border-radius: 20px;
+      padding: 18px;
+      text-align: center;
+      border: 1px dashed #EAD5CB;
+      box-shadow: var(--sombra-papel);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.2s ease;
+    }
+
+    .card-produto.escondido { display: none; }
+
+    .card-produto img {
+      width: 100%;
+      height: 150px;
+      object-fit: contain;
+      border-radius: 12px;
+      margin-bottom: 10px;
+    }
+
+    .card-produto h3 { font-size: 1rem; margin-bottom: 4px; line-height: 1.3; }
+    
+    .card-produto .subtitulo {
+      font-size: 0.85rem;
+      color: #777;
+      min-height: 32px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card-produto .preco {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--terracota-suave);
+      margin-bottom: 12px;
+    }
+
+    .btn-adicionar {
+      background-color: var(--verde-folha);
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 25px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-adicionar.adicionado { background-color: #386953 !important; }
+
+    .barra-carrinho {
+      position: fixed;
+      bottom: 0; left: 0; width: 100%;
+      background: #FFFFFF;
+      padding: 15px 20px;
+      box-shadow: 0 -4px 15px rgba(0,0,0,0.08);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .acoes-carrinho {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-limpar-carrinho {
+      background: transparent;
+      border: 1px solid #D16B58;
+      color: var(--terracota-suave);
+      padding: 10px 14px;
+      border-radius: 25px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-limpar-carrinho:hover {
+      background: #FDF1ED;
+    }
+
+    .btn-finalizar {
+      background-color: var(--terracota-suave);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 25px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <a href="index.html" class="btn-voltar">Voltar para o início</a>
+
+    <header class="cabecalho-loja">
+      <h1>Mimos para o 1º Aninho</h1>
+    </header>
+
+    <!-- CARD DE INFORMAÇÕES E TEXTO ATUALIZADO -->
+    <section class="card-info-top">
+      <p><strong>Sua presença é o nosso maior presente!</strong></p>
+      <p>Se quiser presentear a Liz, fique à vontade para escolher:</p>
+      <ul>
+        <li><strong>Pelo site:</strong> Você escolhe os itens da lojinha, faz o pagamento e o valor do mimo vai diretamente para a Liz.</li>
+        <li><strong>Presente físico:</strong> Se preferir comprar em uma loja o presente que quiser e levar no dia da festa para ver a reação dela abrindo, vamos amar!</li>
+      </ul>
+
+      <div class="box-tamanhos">
+        <div class="item-tamanho">Roupas: <strong>1 Ano / 12 a 18 Meses</strong></div>
+        <div class="item-tamanho">Calçados: <strong>Nº 19/20</strong></div>
+      </div>
+    </section>
+
+    <!-- CATEGORIAS -->
+    <div class="filtros-categoria">
+      <button class="btn-filtro ativo" onclick="filtrarCategoria('todos', this)">Todos</button>
+      <button class="btn-filtro" onclick="filtrarCategoria('brinquedos', this)">Brinquedos</button>
+      <button class="btn-filtro" onclick="filtrarCategoria('roupas', this)">Roupas</button>
+      <button class="btn-filtro" onclick="filtrarCategoria('calcados', this)">Calçados</button>
+      <button class="btn-filtro" onclick="filtrarCategoria('acessorios', this)">Acessórios</button>
+      <button class="btn-filtro" onclick="filtrarCategoria('outros', this)">Outros</button>
+    </div>
+
+    <!-- ORDENAÇÃO -->
+    <div class="barra-ordenacao">
+      <label for="select-ordem">Ordenar por:</label>
+      <select id="select-ordem" class="select-ordenacao" onchange="ordenarProdutos(this.value)">
+        <option value="padrao">Padrão</option>
+        <option value="menor-preco">Menor preço</option>
+        <option value="maior-preco">Maior preço</option>
+        <option value="nome-az">Nome (A - Z)</option>
+      </select>
+    </div>
+
+    <main class="grid-produtos" id="grid-produtos">
+
+      <!-- BRINQUEDOS -->
+      <article class="card-produto" data-categoria="brinquedos" data-preco="45.00" data-nome="Coleção Primeira Biblioteca">
+        <img src="imgs/box_livros.jpg" alt="Coleção Primeira Biblioteca">
+        <h3>Coleção Primeira Biblioteca</h3>
+        <p class="subtitulo">Box com 10 Livrinhos</p>
+        <p class="preco">R$ 45,00</p>
+        <button class="btn-adicionar" onclick="adicionarItem('Coleção Primeira Biblioteca', 45.00, this)">Adicionar Mimo</button>
+      </article>
+
+      <article class="card-produto" data-categoria="brinquedos" data-preco="120.00" data-nome="Lousa Mágica Infantil Divertida com Piano Musical">
+        <img src="imgs/lousa_piano.jpg" alt="Lousa Mágica Infantil">
+        <h3>Lousa Mágica Infantil Divertida com Piano Musical</h3>
+        <p class="subtitulo"></p>
+        <p class="preco">R$ 120,00</p>
+        <button class="btn-adicionar" onclick="adicionarItem('Lousa Mágica com Piano Musical', 120.00, this)">Adicionar Mimo</button>
+      </article>
+
+      <article class="card-produto" data-categoria="brinquedos" data-preco="45.00" data-nome="Cubo de Atividades Bebê">
+        <img src="imgs/foguete.jpg" alt="Cubo de Atividades Bebê">
+        <h3>Cubo de Atividades Bebê</h3>
+        <p class="subtitulo">6 em 1 Brinquedo Montessori Sensorial</p>
+        <p class="preco">R$ 45,00</p>
+        <button class="btn-adicionar" onclick="adicionarItem('Cubo de Atividades Bebê', 45.00, this)">Adicionar Mimo</button>
+      </article>
+
+      <article class="card-produto" data-categoria="brinquedos" data-preco="35.00" data-nome="Meu Primeiro Pandeiro Colorido">
+        <img src="imgs/pandeiro.jpg" alt="Meu Primeiro Pandeiro Colorido">
+        <h3>Meu Primeiro Pandeiro Colorido</h3>
+        <p class="subtitulo"></p>
+        <p class="preco">R$ 35,00</p>
+        <button class="btn-adicionar" onclick="adicionarItem('Meu Primeiro Pandeiro Colorido', 35.00, this)">Adicionar Mimo</button>
+      </article>
+
+      <article class="card-produto" data-categoria="brinquedos" data-preco="55.00" data-nome="Novo Telefone Feliz">
+        <img src="imgs/telefone.jpg" alt="Novo Telefone Feliz">
+        <h3>Novo Telefone Feliz</h3>
+        <p class="subtitulo"></p>
+        <p class="preco">R$ 55,00</p>
+        <button class="btn-adicionar" onclick="adicionarItem('Novo Telefone Feliz', 55.00, this)">Adicionar Mimo</button>
+      </article>
+
+      <article class="card-produto" data-categoria="brinquedos" data-preco="130.00" data-nome="Brinquedo Sensorial Contas De Madeira">
+        <img src="imgs/foguete_madeira.jpg" alt="Brinquedo Sensorial Contas De Madeira">
+        <h3>Brinquedo Sensorial Contas De Madeira</h3>
+        <p class="subtitulo"></p>
+        <p class="preco">R$ 130,00</p>
+        <button class="btn-adicionar" onclick="adicionarItem('Brinquedo Sensorial Contas De Madeira', 130.00, this)">Adicionar Mimo</button>
+      </article>
+
+      <article class="card-produto" data-categoria="brinquedos" data-preco="120.00" data-nome="Girafa com Blocos">
+        <img src="imgs/girafa.jpg" alt="Girafa com Blocos">
+        <h3>Girafa com Blocos</h3>
+        <p class="subtitulo"></p>
+        <p class="preco">R$ 120,00</p>
+        <button class="btn-adicionar" onclick="adicionarItem('Girafa com Blocos', 120.00, this)">Adicionar Mimo</button>
+      </article>
+
+      <article class="card-produto" data-categoria="brinquedos" data-preco="75.00" data-nome="Bicicleta de Equilíbrio Infantil">
+        <img src="imgs/equilibrio.jpg" alt="Bicicleta de Equilíbrio Infantil">
+        <h3>Bicicleta de Equilíbrio Infantil</h3>
+        <p class="subtitulo">Desenvolve Coordenação Motora e Equilíbrio</p>
+        <p class="preco">R$ 75,00</p>
+        <button class="btn-adicionar" onclick="adicionarItem('Bicicleta de Equilíbrio Infantil', 75.00, this)">Adicionar Mimo</button>
+      </article>
+
+      <article class="card-produto" data-categoria="brinquedos" data-preco="70.00" data-nome="Cubo Entrelaçado">
+        <img src="imgs/cubo.jpg" alt="Cubo Entrelaçado">
+        <h3>Cubo Entrelaçado</h3>
+        <p class="subtitulo"></p>
+        <p class="preco">R$ 70,00</p>
+        <button class="btn-adicionar" onclick="adicionarItem('Cubo Entrelaçado', 70.00, this)">Adicionar Mimo</button>
+      </article>
+
+      <article class="card-produto" data-categoria="brinquedos" data-preco="130.00" data-nome="Toys Descoberta na Fazenda Montessori Educativo">
+        <img src="imgs/fazenda.jpg" alt="Toys Descoberta na Fazenda Montessori Educativo">
+        <h3>Toys Descoberta na Fazenda Montessori Educativo</h3>
+        <p class="subtitulo"></p>
+        <p class="preco">R$ 130,00</p>
+        <button class="btn-adicionar" onclick="adicionarItem('Toys Descoberta na Fazenda', 130.00, this)">Adicionar Mimo</button>
+      </article>
+
+      <article class="card-produto" data-categoria="brinquedos" data-preco="80.00" data-nome="Brinquedo Educativo Encaixe Ovos Cores e Formas">
+        <img src="imgs/ovos.jpg" alt="Brinquedo Educativo Encaixe Ovos Cores e Formas">
+        <h3>Brinquedo Educativo Encaixe Ovos Cores e Formas</h3>
+        <p class="subtitulo">12 Peças</p>
+        <p class="preco">R$ 80,00</p>
+        <button class="btn-adicionar" onclick="adicionarItem('Brinquedo Educativo Encaixe Ovos', 80.00, this)">Adicionar Mimo</button>
+      </article>
+
+      <article class="card-produto" data-categoria="brinquedos" data-preco="350.00" data-nome="Torre de Aprendizagem Montessori 4 em 1 com Escorregador">
+        <img src="imgs/torre.jpg" alt="Torre de Aprendizagem Montessori 4 em 1 com Escorregador">
+        <h3>Torre de Aprendizagem Montessori 4 em 1 com Escorregador</h3>
+        <p class="subtitulo">Cadeirão, Mesinha, Verde Chá, para Crianças de 1 a 6 Anos</p>
+        <p class="preco">R$ 350,00</p>
+        <button class="btn-adicionar" onclick="adicionarItem('Torre de Aprendizagem Montessori 4 em 1', 350.00, this)">Adicionar Mimo</button>
+      </article>
+
+      <article class="card-produto" data-categoria="brinquedos" data-preco="50.00" data-nome="Montessori brinquedos sensoriais">
+        <img src="imgs/mala.jpg" alt="Montessori brinquedos sensoriais">
+        <h3>Montessori Brinquedos Sensoriais</h3>
+        <p class="subtitulo">Quadro para Habilidades Motoras</p>
+        <p class="preco">R$ 50,00</p>
+        <button class="btn-adicionar" onclick="adicionarItem('Montessori Brinquedos Sensoriais', 50.00, this)">Adicionar Mimo</button>
+      </article>
+
+      <article class="card-produto" data-categoria="brinquedos" data-preco="55.00" data-nome="Celular Interativo">
+        <img src="imgs/celular.jpg" alt="Celular Interativo">
+        <h3>Celular Interativo</h3>
+        <p class="subtitulo"></p>
+        <p class="preco">R$ 55,00</p>
+        <button class="btn-adicionar" onclick="adicionarItem('Celular Interativo', 55.00, this)">Adicionar Mimo</button>
+      </article>
+
+      <article class="card-produto" data-categoria="brinquedos" data-preco="145.00" data-nome="Laptop De Aprendizagem">
+        <img src="imgs/notebook.jpg" alt="Laptop De Aprendizagem">
+        <h3>Laptop De Aprendizagem</h3>
+        <p class="subtitulo"></p>
+        <p class="preco">R$ 145,00</p>
+        <button class="btn-adicionar" onclick="adicionarItem('Laptop De Aprendizagem', 145.00, this)">Adicionar Mimo</button>
+      </article>
+
+      <!-- ROUPAS -->
+      <article class="card-produto" data-categoria="roupas" data-preco="45.00" data-nome="Camiseta Slim Infantil em Ribana com Bordado de Morango">
+        <img src="imgs/camiseta_moranguinho.jpg" alt="Camiseta Slim Infantil em Ribana com Bordado de Morango">
+        <h3>Camiseta Slim Infantil em Ribana com Bordado de Morango</h3>
+        <p class="subtitulo"></p>
+        <p class="preco">R$ 45,00</p>
+        <button class="btn-adicionar" onclick="adicionarItem('Camiseta Slim Ribana Bordado Morango', 45.00, this)">Adicionar Mimo</button>
+      </article>
+
+      <article class="card-produto" data-categoria="roupas" data-preco="45.00" data-nome="Camiseta Infantil Em Ribana Cereja">
+        <img src="imgs/camiseta_cereja.jpg" alt="Camiseta Infantil Em Ribana Cereja">
+        <h3>Camiseta Infantil Em Ribana Cereja</h3>
+        <p class="subtitulo"></p>
+        <p class="preco">R$ 45,00</p>
+        <button class="btn-adicionar" onclick="adicionarItem('Camiseta Infantil Em Ribana Cereja', 45.00, this)">Adicionar Mimo</button>
+      </article>
+
+      <article class="card-produto" data-categoria="roupas" data-preco="95.00" data-nome="Blusa Slim Infantil Xadrez Vichy com Morangos e Babado">
+        <img src="imgs/blusa_morangos.jpg" alt="Blusa Slim Infantil Xadrez Vichy com Morangos e Babado">
+        <h3>Blusa Slim Infantil Xadrez Vichy com Morangos e Babado</h3>
+        <p class="subtitulo"></p>
+        <p class="preco">R$ 95,00</p>
+        <button class="btn-adicionar" onclick="adicionarItem('Blusa Xadrez Vichy Morangos e Babado', 95.00, this)">Adicionar Mimo</button>
+      </article>
+
+      <article class="card-produto" data-categoria="roupas" data-preco="45.00" data-nome="Regata Nadador Listrada com Ícone My Melody">
+        <img src="imgs/regata_melody.jpg" alt="Regata Nadador Listrada com Ícone My Melody">
+        <h3>Regata Nadador Listrada com Ícone My Melody</h3>
+        <p class="subtitulo"></p>
+        <p class="preco">R$ 45,00</p>
+        <button class="btn-adicionar" onclick="adicionarItem('Regata Nadador Listrada My Melody', 45.00, this)">Adicionar Mimo</button>
+      </article>
+
+      <article class="card-produto" data-categoria="roupas" data-preco="55.00" data-nome="Regata Infantil com Babadinhos nas Mangas e Estampa de Laço">
+        <img src="imgs/regata_babado.jpg" alt="Regata Infantil com Babadinhos nas Mangas e Estampa de Laço">
+        <h3>Regata Infantil com Babadinhos nas Mangas e Estampa de Laço</h3>
+        <p class="subtitulo"></p>
+        <p class="preco">R$ 55,00</p>
+        <button class="btn-adicionar" onclick="adicionarItem('Regata Babadinhos e Estampa Laço', 55.00, this)">Adicionar Mimo</button>
+      </article>
+
+      <article class="card-produto" data-categoria="roupas" data-preco="55.00" data-nome="Blusa Infantil Flanela Canelada">
+        <img src="imgs/blusa_flanela.jpg" alt="Blusa Infantil Flanela Canelada">
+        <h3>Blusa Infantil Flanela Canelada</h3>
+        <p class="subtitulo"></p>
+        <p class="preco">R$ 55,00</p>
+        <button class="btn-adicionar" onclick="adicionarItem('Blusa Infantil Flanela Canelada', 55.00, this)">Adicionar Mimo</button>
+      </article>
+
+      <article class="card-produto" data-categoria="roupas" data-preco="55.00" data-nome="Camiseta Infantil com Bordados de Flores">
+        <img src="imgs/camiseta_flores.jpg" alt="Camiseta Infantil com Bordados de Flores">
+        <h3>Camiseta Infantil com Bordados de Flores</h3>
+        <p class="subtitulo"></p>
+        <p class="preco">R$ 55,00</p>
+        <button class="btn-adicionar" onclick="adicionarItem('Camiseta Infantil Bordados Flores', 55.00, this)">Adicionar Mimo</button>
+      </article>
+
+      <article class="card-produto" data-categoria="roupas" data-preco="55.00" data-nome="Camiseta Infantil Poim com Bordados de Borboletas">
+        <img src="imgs/camiseta_borboletas.jpg" alt="Camiseta Infantil Poim com Bordados de Borboletas">
+        <h3>Camiseta Infantil Poim com Bordados de Borboletas</h3>
+        <p class="subtitulo"></p>
+        <p class="preco">R$ 55,00</p>
+        <button class="btn-adicionar" onclick="adicionarItem('Camiseta Poim Bordados Borboletas', 55.00, this)">Adicionar Mimo</button>
+      </article>
+
+      <article class="card-produto" data-categoria="roupas" data-preco="45.00" data-nome="Camiseta Slim Infantil em Ribana com Bordado de Flor">
+        <img src="imgs/camiseta_flor.jpg" alt="Camiseta Slim Infantil em Ribana com Bordado de Flor">
+        <h3>Camiseta Slim Infantil em Ribana com Bordado de Flor</h3>
+        <p class="subtitulo"></p>
+        <p class="preco">R$ 45,00</p>
+        <button class="btn-adicionar" onclick="adicionarItem('Camiseta Slim Ribana Bordado Flor', 45.00, this)">Adicionar Mimo</button>
+      </article>
+
+      <article class="card-produto" data-categoria="roupas" data-preco="35.00" data-nome="Cardigan Infantil em Ribana com Botões Frontais">
+        <img src="imgs/cardigan.jpg" alt="Cardigan Infantil em Ribana com Botões Frontais">
+        <h3>Cardigan Infantil em Ribana com Botões Frontais</h3>
+        <p class="subtitulo"></p>
+        <p class="preco">R$ 35,00</p>
+        <button class="btn-adicionar" onclick="adicionarItem('Cardigan Infantil em Ribana', 35.00, this)">Adicionar Mimo</button>
+      </article>
+
+      <article class="card-produto" data-categoria="roupas" data-preco="55.00" data-nome="Regata Slim Infantil com Babado na Barra e Bordado Coração">
+        <img src="imgs/regata_coracao.jpg" alt="Regata Slim Infantil com Babado na Barra e Bordado Coração">
+        <h3>Regata Slim Infantil com Babado na Barra e Bordado Coração</h3>
+        <p class="subtitulo"></p>
+        <p class="preco">R$ 55,00</p>
+        <button class="btn-adicionar" onclick="adicionarItem('Regata Slim Babado e Bordado Coração', 55.00, this)">Adicionar Mimo</button>
+      </article>
+
+      <article class="card-produto" data-categoria="roupas" data-preco="135.00" data-nome="Conjunto Infantil Texturizado com Lacinhos e Calça Wide Leg">
+        <img src="imgs/conjunto_lacinhos.jpg" alt="Conjunto Infantil Texturizado com Lacinhos e Calça Wide Leg">
+        <h3>Conjunto Infantil Texturizado com Lacinhos e Calça Wide Leg</h3>
+        <p class="subtitulo"></p>
+        <p class="preco">R$ 135,00</p>
+        <button class="btn-adicionar" onclick="adicionarItem('Conjunto Texturizado Lacinhos Wide Leg', 135.00, this)">Adicionar Mimo</button>
+      </article>
+
+      <article class="card-produto" data-categoria="roupas" data-preco="115.00" data-nome="Conjunto Infantil Texturizado com Batinha e Short com Bolsos">
+        <img src="imgs/conjunto_batinha.jpg" alt="Conjunto Infantil Texturizado com Batinha e Short com Bolsos">
+        <h3>Conjunto Infantil Texturizado com Batinha e Short com Bolsos</h3>
+        <p class="subtitulo"></p>
+        <p class="preco">R$ 115,00</p>
+        <button class="btn-adicionar" onclick="adicionarItem('Conjunto Texturizado Batinha e Short', 115.00, this)">Adicionar Mimo</button>
+      </article>
+
+      <article class="card-produto" data-categoria="roupas" data-preco="90.00" data-nome="Conjunto Infantil Casaco e Legging com Estampa Cachorro">
+        <img src="imgs/conjunto_legging.jpg" alt="Conjunto Infantil Casaco e Legging com Estampa Cachorro">
+        <h3>Conjunto Infantil Casaco e Legging com Estampa Cachorro</h3>
+        <p class="subtitulo"></p>
+        <p class="preco">R$ 90,00</p>
+        <button class="btn-adicionar" onclick="adicionarItem('Conjunto Casaco e Legging Cachorro', 90.00, this)">Adicionar Mimo</button>
+      </article>
+
+      <article class="card-produto" data-categoria="roupas" data-preco="135.00" data-nome="Salopete Evasê Infantil com Bordado de Cerejas">
+        <img src="imgs/salopete_evase.jpg" alt="Salopete Evasê Infantil com Bordado de Cerejas">
+        <h3>Salopete Evasê Infantil com Bordado de Cerejas</h3>
+        <p class="subtitulo"></p>
+        <p class="preco">R$ 135,00</p>
+        <button class="btn-adicionar" onclick="adicionarItem('Salopete Evasê Bordado Cerejas', 135.00, this)">Adicionar Mimo</button>
+      </article>
+
+      <article class="card-produto" data-categoria="roupas" data-preco="135.00" data-nome="Calça Jeans Wide Infantil com Bordado Mini Ícones">
+        <img src="imgs/calca_wide.jpg" alt="Calça Jeans Wide Infantil com Bordado Mini Ícones">
+        <h3>Calça Jeans Wide Infantil com Bordado Mini Ícones</h3>
+        <p class="subtitulo"></p>
+        <p class="preco">R$ 135,00</p>
+        <button class="btn-adicionar" onclick="adicionarItem('Calça Jeans Wide Mini Ícones', 135.00, this)">Adicionar Mimo</button>
+      </article>
+
+      <article class="card-produto" data-categoria="roupas" data-preco="65.00" data-nome="Suéter Infantil com Laços Aplicados">
+        <img src="imgs/sueter_lacos.jpg" alt="Suéter Infantil com Laços Aplicados">
+        <h3>Suéter Infantil com Laços Aplicados</h3>
+        <p class="subtitulo"></p>
+        <p class="preco">R$ 65,00</p>
+        <button class="btn-adicionar" onclick="adicionarItem('Suéter Infantil com Laços Aplicados', 65.00, this)">Adicionar Mimo</button>
+      </article>
+
+      <article class="card-produto" data-categoria="roupas" data-preco="115.00" data-nome="Calça Jeans Infantil Mom com Cintinho Decorativo">
+        <img src="imgs/calca_mom.jpg" alt="Calça Jeans Infantil Mom com Cintinho Decorativo">
+        <h3>Calça Jeans Infantil Mom com Cintinho Decorativo</h3>
+        <p class="subtitulo"></p>
+        <p class="preco">R$ 115,00</p>
+        <button class="btn-adicionar" onclick="adicionarItem('Calça Jeans Mom Cintinho Decorativo', 115.00, this)">Adicionar Mimo</button>
+      </article>
+
+      <article class="card-produto" data-categoria="roupas" data-preco="135.00" data-nome="Calça Mom Infantil em Jeans com Bordados de Corações">
+        <img src="imgs/calca_coracoes.jpg" alt="Calça Mom Infantil em Jeans com Bordados de Corações">
+        <h3>Calça Mom Infantil em Jeans com Bordados de Corações</h3>
+        <p class="subtitulo"></p>
+        <p class="preco">R$ 135,00</p>
+        <button class="btn-adicionar" onclick="adicionarItem('Calça Mom Jeans Bordados Corações', 135.00, this)">Adicionar Mimo</button>
+      </article>
+
+      <article class="card-produto" data-categoria="roupas" data-preco="115.00" data-nome="Calça Infantil Wide em Jeans com Laços Laterais">
+        <img src="imgs/calca_lacos.jpg" alt="Calça Infantil Wide em Jeans com Laços Laterais">
+        <h3>Calça Infantil Wide em Jeans com Laços Laterais</h3>
+        <p class="subtitulo"></p>
+        <p class="preco">R$ 115,00</p>
+        <button class="btn-adicionar" onclick="adicionarItem('Calça Wide Jeans Laços Laterais', 115.00, this)">Adicionar Mimo</button>
+      </article>
+
+      <article class="card-produto" data-categoria="roupas" data-preco="100.00" data-nome="Calça Infantil Jeans Mom com Laços">
+        <img src="imgs/calca_mom_lacos.jpg" alt="Calça Infantil Jeans Mom com Laços">
+        <h3>Calça Infantil Jeans Mom com Laços</h3>
+        <p class="subtitulo"></p>
+        <p class="preco">R$ 100,00</p>
+        <button class="btn-adicionar" onclick="adicionarItem('Calça Jeans Mom com Laços', 100.00, this)">Adicionar Mimo</button>
+      </article>
+
+      <article class="card-produto" data-categoria="roupas" data-preco="95.00" data-nome="Conjunto Infantil Vestido Evase com Blusa Slim">
+        <img src="imgs/vestido_blusa.jpg" alt="Conjunto Infantil Vestido Evase com Blusa Slim">
+        <h3>Conjunto Infantil Vestido Evase com Blusa Slim</h3>
+        <p class="subtitulo"></p>
+        <p class="preco">R$ 95,00</p>
+        <button class="btn-adicionar" onclick="adicionarItem('Conjunto Vestido Evase Blusa Slim', 95.00, this)">Adicionar Mimo</button>
+      </article>
+
+      <article class="card-produto" data-categoria="roupas" data-preco="155.00" data-nome="Vestido Infantil com Estampa de Laços e Meia Calça">
+        <img src="imgs/vestido_meia.jpg" alt="Vestido Infantil com Estampa de Laços e Meia Calça">
+        <h3>Vestido Infantil com Estampa de Laços e Meia Calça</h3>
+        <p class="subtitulo"></p>
+        <p class="preco">R$ 155,00</p>
+        <button class="btn-adicionar" onclick="adicionarItem('Vestido Estampa Laços e Meia Calça', 155.00, this)">Adicionar Mimo</button>
+      </article>
+
+      <article class="card-produto" data-categoria="roupas" data-preco="65.00" data-nome="Jaqueta Bebê College com Estampa Coelho">
+        <img src="imgs/jaqueta_college.jpg" alt="Jaqueta Bebê College com Estampa Coelho">
+        <h3>Jaqueta Bebê College com Estampa Coelho</h3>
+        <p class="subtitulo"></p>
+        <p class="preco">R$ 65,00</p>
+        <button class="btn-adicionar" onclick="adicionarItem('Jaqueta Bebê College Estampa Coelho', 65.00, this)">Adicionar Mimo</button>
+      </article>
+
+      <article class="card-produto" data-categoria="roupas" data-preco="75.00" data-nome="Body Vestido Bebê São Paulo Tricolor">
+        <img src="imgs/body_vestido_spfc.jpg" alt="Body Vestido Bebê São Paulo Tricolor">
+        <h3>Body Vestido Bebê São Paulo Tricolor</h3>
+        <p class="subtitulo"></p>
+        <p class="preco">R$ 75,00</p>
+        <button class="btn-adicionar" onclick="adicionarItem('Body Vestido São Paulo Tricolor', 75.00, this)">Adicionar Mimo</button>
+      </article>
+
+      <!-- CALÇADOS -->
+      <article class="card-produto" data-categoria="calcados" data-preco="45.00" data-nome="Chinelo Havaianas Baby Mini Me">
+        <img src="imgs/havaianas_minime.jpg" alt="Chinelo Havaianas Baby Mini Me">
+        <h3>Chinelo Havaianas Baby Mini Me</h3>
+        <p class="subtitulo"></p>
+        <p class="preco">R$ 45,00</p>
+        <button class="btn-adicionar" onclick="adicionarItem('Chinelo Havaianas Baby Mini Me', 45.00, this)">Adicionar Mimo</button>
+      </article>
+
+      <article class="card-produto" data-categoria="calcados" data-preco="195.00" data-nome="Mini Melissa Cozy Sandal Garden Flow Baby">
+        <img src="imgs/melissa_cozy.jpg" alt="Mini Melissa Cozy Sandal Garden Flow Baby">
+        <h3>Mini Melissa Cozy Sandal Garden Flow Baby</h3>
+        <p class="subtitulo"></p>
+        <p class="preco">R$ 195,00</p>
+        <button class="btn-adicionar" onclick="adicionarItem('Mini Melissa Cozy Sandal Garden Flow', 195.00, this)">Adicionar Mimo</button>
+      </article>
+
+      <article class="card-produto" data-categoria="calcados" data-preco="175.00" data-nome="Tênis Infantil Converse All Star Chuck Taylor Baby">
+        <img src="imgs/all_star.jpg" alt="Tênis Infantil Converse All Star Chuck Taylor Baby">
+        <h3>Tênis Infantil Converse All Star Chuck Taylor Baby</h3>
+        <p class="subtitulo"></p>
+        <p class="preco">R$ 175,00</p>
+        <button class="btn-adicionar" onclick="adicionarItem('Tênis All Star Chuck Taylor Baby', 175.00, this)">Adicionar Mimo</button>
+      </article>
+
+      <article class="card-produto" data-categoria="calcados" data-preco="295.00" data-nome="Tênis Old Skool V Infantil">
+        <img src="imgs/vans_black.jpg" alt="Tênis Old Skool V Infantil">
+        <h3>Tênis Old Skool V Infantil</h3>
+        <p class="subtitulo"></p>
+        <p class="preco">R$ 295,00</p>
+        <button class="btn-adicionar" onclick="adicionarItem('Tênis Old Skool V Infantil', 295.00, this)">Adicionar Mimo</button>
+      </article>
+
+      <article class="card-produto" data-categoria="calcados" data-preco="295.00" data-nome="Tênis Authentic Pale Petal">
+        <img src="imgs/vans_authentic.jpg" alt="Tênis Authentic Pale Petal">
+        <h3>Tênis Authentic Pale Petal</h3>
+        <p class="subtitulo"></p>
+        <p class="preco">R$ 295,00</p>
+        <button class="btn-adicionar" onclick="adicionarItem('Tênis Authentic Pale Petal', 295.00, this)">Adicionar Mimo</button>
+      </article>
+
+    </main>
+  </div>
+
+  <aside class="barra-carrinho">
+    <div>
+      <p style="font-size:0.85rem;">Mimos selecionados: <span id="qtd-itens">0</span></p>
+      <p>Total: <strong id="valor-total" style="color:var(--terracota-suave);">R$ 0,00</strong></p>
+    </div>
+    <div class="acoes-carrinho">
+      <button class="btn-limpar-carrinho" onclick="limparCarrinho()">Esvaziar</button>
+      <button class="btn-finalizar" onclick="concluirPresente()">Finalizar Mimos</button>
+    </div>
+  </aside>
+
+  <script>
+    let carrinho = JSON.parse(localStorage.getItem('carrinhoLiz')) || [];
+
+    document.addEventListener("DOMContentLoaded", () => {
+      atualizarBarraCarrinho();
+    });
+
+    function filtrarCategoria(categoria, botaoClicado) {
+      const botoes = document.querySelectorAll('.btn-filtro');
+      botoes.forEach(btn => btn.classList.remove('ativo'));
+      botaoClicado.classList.add('ativo');
+
+      const produtos = document.querySelectorAll('.card-produto');
+      produtos.forEach(produto => {
+        const catProduto = produto.getAttribute('data-categoria');
+        if (categoria === 'todos' || catProduto === categoria) {
+          produto.classList.remove('escondido');
+        } else {
+          produto.classList.add('escondido');
+        }
+      });
+    }
+
+    function ordenarProdutos(criterio) {
+      const container = document.getElementById('grid-produtos');
+      const produtos = Array.from(container.querySelectorAll('.card-produto'));
+
+      produtos.sort((a, b) => {
+        const precoA = parseFloat(a.getAttribute('data-preco'));
+        const precoB = parseFloat(b.getAttribute('data-preco'));
+        const nomeA = a.getAttribute('data-nome').toLowerCase();
+        const nomeB = b.getAttribute('data-nome').toLowerCase();
+
+        if (criterio === 'menor-preco') {
+          return precoA - precoB;
+        } else if (criterio === 'maior-preco') {
+          return precoB - precoA;
+        } else if (criterio === 'nome-az') {
+          return nomeA.localeCompare(nomeB);
+        } else {
+          return 0;
+        }
+      });
+
+      produtos.forEach(produto => container.appendChild(produto));
+    }
+
+    function adicionarItem(nome, preco, elementoBotao) {
+      carrinho.push({ nome: nome, preco: preco });
+      localStorage.setItem('carrinhoLiz', JSON.stringify(carrinho));
+      atualizarBarraCarrinho();
+
+      if (elementoBotao) {
+        const textoOriginal = elementoBotao.innerText;
+        elementoBotao.innerText = "Adicionado!";
+        elementoBotao.classList.add("adicionado");
+        elementoBotao.disabled = true;
+
+        setTimeout(() => {
+          elementoBotao.innerText = textoOriginal;
+          elementoBotao.classList.remove("adicionado");
+          elementoBotao.disabled = false;
+        }, 1200);
+      }
+    }
+
+    function atualizarBarraCarrinho() {
+      let total = 0;
+      carrinho.forEach(item => total += item.preco);
+      document.getElementById('qtd-itens').innerText = carrinho.length;
+      document.getElementById('valor-total').innerText = 'R$ ' + total.toFixed(2).replace('.', ',');
+    }
+
+    function limparCarrinho() {
+      if (carrinho.length === 0) return;
+      if (confirm("Deseja esvaziar os mimos selecionados?")) {
+        carrinho = [];
+        localStorage.removeItem('carrinhoLiz');
+        atualizarBarraCarrinho();
+      }
+    }
+
+    function concluirPresente() {
+      if (carrinho.length === 0) {
+        alert("Escolha ao menos um mimo antes de continuar!");
+        return;
+      }
+      localStorage.setItem('carrinhoLiz', JSON.stringify(carrinho));
+      window.location.href = "carrinho.html";
+    }
+  </script>
+</body>
+</html>
