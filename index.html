@@ -6,439 +6,268 @@
   <title>1º Aninho da Liz</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Fredoka:wght@400;600&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --bg-aquarela: #F9EBE7;
-      --papel-card: #FFFDF9;
-      --terracota: #D16B58;
-      --verde-folha: #40B590;
-      --texto: #4A3E3D;
-      --sombra: 0 8px 20px rgba(180, 140, 130, 0.15);
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
-
     body {
       font-family: 'Quicksand', sans-serif;
-      background-color: var(--bg-aquarela);
-      color: var(--texto);
-      padding-bottom: 40px;
+      background-color: #fdf6f0;
+      color: #5a4a42;
+      padding: 20px 15px;
     }
-
-    .container { max-width: 800px; margin: 0 auto; padding: 0 20px; text-align: center; }
-
-    .banner-capa {
-      width: 100%;
-      max-width: 800px;
-      margin: 0 auto 25px auto;
-      display: block;
-      border-radius: 0 0 24px 24px;
-      box-shadow: var(--sombra);
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
     }
-
-    .card-papel {
-      background: var(--papel-card);
-      border-radius: 24px;
+    .card {
+      background: #fffdfa;
+      border-radius: 20px;
       padding: 30px 20px;
       margin-bottom: 30px;
-      box-shadow: var(--sombra);
-      border: 1px dashed #EAD5CB;
+      border: 2px dashed #f0cbb8;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.03);
     }
-
-    .card-papel h2 {
+    h1, h2 {
       font-family: 'Caveat', cursive;
-      font-size: 2.5rem;
-      color: var(--terracota);
-      margin-bottom: 10px;
-    }
-
-    .card-papel p {
-      font-size: 1.05rem;
-      line-height: 1.6;
-      color: #6A5856;
-      margin-bottom: 15px;
-    }
-
-    /* CONTADOR REGRESSIVO */
-    .box-contador {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      margin: 20px 0 10px 0;
-      flex-wrap: wrap;
-    }
-
-    .item-tempo {
-      background: #FDF1ED;
-      border: 1px solid #F0DAD3;
-      border-radius: 16px;
-      padding: 10px 14px;
-      min-width: 70px;
-    }
-
-    .item-tempo span {
-      display: block;
-      font-family: 'Fredoka', cursive;
-      font-size: 1.6rem;
-      color: var(--terracota);
-      line-height: 1.1;
-    }
-
-    .item-tempo label {
-      font-size: 0.75rem;
-      font-weight: 700;
-      color: #777;
-      text-transform: uppercase;
-    }
-
-    /* MURAL DOS MESVERSÁRIOS EM 4-4-3 */
-    .grid-mesversarios {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-      margin-top: 20px;
-    }
-
-    .linha-mural {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
-    .card-polaroid {
-  background: #FFFFFF;
-  padding: 8px 8px 12px 8px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-  border-radius: 6px;
-  border: 1px solid #EAD5CB;
-  text-align: center;
-  transform: rotate(-1.5deg);
-  transition: transform 0.2s ease;
-  flex: 1 1 140px;
-  max-width: 160px;
-  overflow: hidden;
-}
-
-.card-polaroid img {
-  width: 100%;
-  height: 140px;
-  object-fit: cover;
-  object-position: top center; /* Foca na parte de cima da foto (no rostinho da Liz) e esconde a barra inferior */
-  border-radius: 4px;
-  display: block;
-}
-
-.card-polaroid span {
-  font-family: 'Caveat', cursive;
-  font-size: 1.3rem;
-  display: block;
-  margin-top: 8px;
-  color: var(--terracota);
-  font-weight: 700;
-}
-
-    .info-festa {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 15px;
-      margin: 20px 0;
+      color: #d97757;
       text-align: center;
     }
-
-    .item-info {
-      background: #FFF;
-      padding: 15px;
-      border-radius: 16px;
-      border: 1px solid #F0DAD3;
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 10px;
+    }
+    h2 {
+      font-size: 2.4rem;
+      margin-bottom: 20px;
+    }
+    p {
+      line-height: 1.6;
+      font-size: 1.05rem;
+      color: #666;
+    }
+    .text-center {
+      text-align: center;
+    }
+    
+    /* Botões */
+    .btn {
+      display: inline-block;
+      padding: 14px 32px;
+      border-radius: 30px;
+      font-weight: 700;
+      text-decoration: none;
+      font-size: 1.05rem;
+      transition: transform 0.2s, opacity 0.2s;
+    }
+    .btn:hover {
+      transform: translateY(-2px);
+      opacity: 0.95;
+    }
+    .btn-primary {
+      background-color: #2a9d8f;
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(42, 157, 143, 0.25);
+    }
+    .btn-mimos {
+      background-color: #d97757;
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(217, 119, 87, 0.25);
     }
 
-    .item-info h3 {
-      font-family: 'Fredoka', cursive;
-      color: var(--terracota);
-      font-size: 1.1rem;
-      margin-bottom: 5px;
-    }
-
-    .mapa-iframe {
-      width: 100%;
-      height: 280px;
-      border: 0;
-      border-radius: 16px;
-      margin-top: 15px;
-      box-shadow: var(--sombra);
-    }
-
-    /* BOTÕES DE GPS ESTILO POLAROID */
-    .grid-apps-gps {
+    /* Contagem Regressiva */
+    .countdown {
       display: flex;
       justify-content: center;
       gap: 15px;
-      margin-top: 20px;
+      margin: 20px 0 25px 0;
       flex-wrap: wrap;
     }
-
-    .btn-app-gps {
-      background: #FFFFFF;
-      border: 1px dashed #EAD5CB;
-      border-radius: 18px;
-      padding: 12px 15px;
-      text-decoration: none;
-      color: var(--texto);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      flex: 1 1 90px;
-      max-width: 110px;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    .time-box {
+      background: #fcf0eb;
+      border-radius: 12px;
+      padding: 10px 15px;
+      min-width: 75px;
+      text-align: center;
+      border: 1px solid #f7d8cb;
     }
-
-    .btn-app-gps:nth-child(1) { transform: rotate(-2deg); }
-    .btn-app-gps:nth-child(2) { transform: rotate(1.5deg); }
-    .btn-app-gps:nth-child(3) { transform: rotate(-1deg); }
-
-    .btn-app-gps:hover {
-      transform: scale(1.05) rotate(0deg);
-      box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+    .time-box .num {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #d97757;
+      display: block;
     }
-
-    .btn-app-gps img {
-      width: 38px;
-      height: 38px;
-      object-fit: contain;
-    }
-
-    .btn-app-gps span {
+    .time-box .label {
       font-size: 0.75rem;
-      font-weight: 700;
-      color: var(--terracota);
-      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: #888;
+      font-weight: 600;
     }
 
-    /* DICAS E PERGUNTAS FREQUENTES */
-    .grid-faq {
-      text-align: left;
-      margin-top: 15px;
+    /* Carrossel de Mesversários */
+    .mesversarios-grid {
       display: flex;
-      flex-direction: column;
-      gap: 12px;
+      gap: 15px;
+      overflow-x: auto;
+      padding: 10px 5px 20px 5px;
+      scroll-snap-type: x mandatory;
     }
-
-    .item-faq {
-      background: #FFF;
-      padding: 15px;
-      border-radius: 16px;
-      border: 1px solid #F0DAD3;
+    .polaroid {
+      background: #fff;
+      padding: 10px 10px 15px 10px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+      flex: 0 0 160px;
+      scroll-snap-align: start;
+      text-align: center;
+      border: 1px solid #eee;
     }
-
-    .item-faq h3 {
-      font-family: 'Fredoka', cursive;
-      color: var(--terracota);
-      font-size: 1rem;
-      margin-bottom: 4px;
-    }
-
-    .item-faq p {
-      font-size: 0.92rem;
-      margin-bottom: 0;
-      color: #6A5856;
-    }
-
-    .btn-afetivo {
-      display: inline-block;
+    .polaroid img {
       width: 100%;
-      max-width: 350px;
-      padding: 15px 25px;
-      border-radius: 50px;
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 1.05rem;
-      box-shadow: var(--sombra);
-      margin: 8px auto;
-      transition: all 0.2s ease;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 4px;
+    }
+    .polaroid span {
+      font-family: 'Caveat', cursive;
+      font-size: 1.3rem;
+      color: #d97757;
+      display: block;
+      margin-top: 8px;
     }
 
-    .btn-loja { background: var(--terracota); color: #FFF; }
-    .btn-rsvp { background: var(--verde-folha); color: #FFF; }
-    .btn-afetivo:active { transform: scale(0.97); }
+    /* Grid do Quando e Onde */
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    .info-box {
+      border: 1px solid #f5dcd0;
+      border-radius: 12px;
+      padding: 15px;
+      text-align: center;
+    }
+    .info-box strong {
+      color: #d97757;
+      display: block;
+      margin-bottom: 5px;
+    }
+    .mapa-container {
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid #f5dcd0;
+    }
+
+    @media (max-width: 600px) {
+      .info-grid {
+        grid-template-columns: 1fr;
+      }
+    }
   </style>
 </head>
 <body>
 
-  <!-- CAPA CANVA -->
-  <img src="imgs/topo_canva.png" alt="Liz 1 Aninho" class="banner-capa">
-
   <div class="container">
-    
-    <section class="card-papel">
-      <h2>Venha comemorar meu primeiro aninho!</h2>
-      <p>O tempo voou e a nossa bebê já vai fazer 1 aninho! Um ano cheio de descobertas, sorrisos, bagunça e muito amor. Agora chegou a hora de comemorar esse dia especial juntinho de vocês!</p>
-      
-      <!-- CONTADOR REGRESSIVO -->
-      <div class="box-contador">
-        <div class="item-tempo"><span id="dias">00</span><label>Dias</label></div>
-        <div class="item-tempo"><span id="horas">00</span><label>Horas</label></div>
-        <div class="item-tempo"><span id="minutos">00</span><label>Min</label></div>
-        <div class="item-tempo"><span id="segundos">00</span><label>Seg</label></div>
+
+    <!-- 1. Convite e Contagem Regressiva -->
+    <div class="card text-center">
+      <h1>Venha comemorar meu primeiro aninho!</h1>
+      <p style="max-width: 650px; margin: 0 auto;">
+        O tempo voou e a nossa bebê já vai fazer 1 aninho! Um ano cheio de descobertas, sorrisos, bagunça e muito amor. Agora chegou a hora de comemorar esse dia especial juntinho de vocês!
+      </p>
+
+      <div class="countdown">
+        <div class="time-box"><span class="num" id="dias">00</span><span class="label">Dias</span></div>
+        <div class="time-box"><span class="num" id="horas">00</span><span class="label">Horas</span></div>
+        <div class="time-box"><span class="num" id="minutos">00</span><span class="label">Min</span></div>
+        <div class="time-box"><span class="num" id="segundos">00</span><span class="label">Seg</span></div>
       </div>
 
-      <!-- Botão único de confirmação -->
-<div style="margin-top: 20px; text-align: center;">
-  <a href="#confirmar" class="btn-confirmar" style="display: inline-block; padding: 14px 28px; background-color: #38b000; color: #fff; border-radius: 30px; font-weight: bold; text-decoration: none; font-size: 1.1rem; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
-    Confirmar Presença
-  </a>
-</div>
+      <div>
+        <a href="#confirmar" class="btn btn-primary">Confirmar Presença</a>
+      </div>
+    </div>
 
-    </section>
-
-    <!-- MURAL DOS MESVERSÁRIOS EM 4 - 4 - 3 -->
-    <section class="card-papel">
+    <!-- 2. Galeria de Mesversários -->
+    <div class="card">
       <h2>Acompanhe meu crescimento</h2>
-      <p>11 meses de momentos especiais e muitas fotos!</p>
-      
-      <div class="grid-mesversarios">
-        <div class="linha-mural">
-          <div class="card-polaroid"><img src="imgs/mesversarios/mes1.jpg" alt="1º Mês"><span>1º Mês</span></div>
-          <div class="card-polaroid"><img src="imgs/mesversarios/mes2.jpg" alt="2º Mês"><span>2º Mês</span></div>
-          <div class="card-polaroid"><img src="imgs/mesversarios/mes3.jpg" alt="3º Mês"><span>3º Mês</span></div>
-          <div class="card-polaroid"><img src="imgs/mesversarios/mes4.jpg" alt="4º Mês"><span>4º Mês</span></div>
-        </div>
-
-        <div class="linha-mural">
-          <div class="card-polaroid"><img src="imgs/mesversarios/mes5.jpg" alt="5º Mês"><span>5º Mês</span></div>
-          <div class="card-polaroid"><img src="imgs/mesversarios/mes6.jpg" alt="6º Mês"><span>6º Mês</span></div>
-          <div class="card-polaroid"><img src="imgs/mesversarios/mes7.jpg" alt="7º Mês"><span>7º Mês</span></div>
-          <div class="card-polaroid"><img src="imgs/mesversarios/mes8.jpg" alt="8º Mês"><span>8º Mês</span></div>
-        </div>
-
-        <div class="linha-mural">
-          <div class="card-polaroid"><img src="imgs/mesversarios/mes9.jpg" alt="9º Mês"><span>9º Mês</span></div>
-          <div class="card-polaroid"><img src="imgs/mesversarios/mes10.jpg" alt="10º Mês"><span>10º Mês</span></div>
-          <div class="card-polaroid"><img src="imgs/mesversarios/mes11.jpg" alt="11º Mês"><span>11º Mês</span></div>
-        </div>
+      <div class="mesversarios-grid">
+        <div class="polaroid"><img src="imgs/mesversarios/mes1.jpg" alt="1º Mês"><span>1º Mês</span></div>
+        <div class="polaroid"><img src="imgs/mesversarios/mes2.jpg" alt="2º Mês"><span>2º Mês</span></div>
+        <div class="polaroid"><img src="imgs/mesversarios/mes3.jpg" alt="3º Mês"><span>3º Mês</span></div>
+        <div class="polaroid"><img src="imgs/mesversarios/mes4.jpg" alt="4º Mês"><span>4º Mês</span></div>
+        <div class="polaroid"><img src="imgs/mesversarios/mes5.jpg" alt="5º Mês"><span>5º Mês</span></div>
+        <div class="polaroid"><img src="imgs/mesversarios/mes6.jpg" alt="6º Mês"><span>6º Mês</span></div>
+        <div class="polaroid"><img src="imgs/mesversarios/mes7.jpg" alt="7º Mês"><span>7º Mês</span></div>
+        <div class="polaroid"><img src="imgs/mesversarios/mes8.jpg" alt="8º Mês"><span>8º Mês</span></div>
+        <div class="polaroid"><img src="imgs/mesversarios/mes9.jpg" alt="9º Mês"><span>9º Mês</span></div>
+        <div class="polaroid"><img src="imgs/mesversarios/mes10.jpg" alt="10º Mês"><span>10º Mês</span></div>
+        <div class="polaroid"><img src="imgs/mesversarios/mes11.jpg" alt="11º Mês"><span>11º Mês</span></div>
       </div>
-    </section>
+    </div>
 
-   <!-- Seção Presentes (Estrutura e Largura Idênticas ao Quando e Onde) -->
-<section style="margin-top: 40px; margin-bottom: 40px;">
-  <div style="background: #fffdfa; border-radius: 20px; padding: 30px 25px; border: 2px dashed #f0cbb8; box-shadow: 0 4px 15px rgba(0,0,0,0.03); text-align: center;">
-    
-    <h2 style="font-family: 'Caveat', cursive; font-size: 2.5rem; color: #d97757; margin-bottom: 12px; font-weight: bold;">
-      Prefere presentear com praticidade?
-    </h2>
-    
-    <p style="font-family: inherit; font-size: 1.05rem; color: #666666; line-height: 1.6; margin: 0 auto 24px auto; max-width: 800px;">
-      Se você preferir, preparamos uma lista online com algumas sugestões de presentes. Assim fica mais prático, sem precisar perder tempo pesquisando ou saindo para comprar.
-    </p>
-    
-    <a href="loja.html" style="display: inline-block; padding: 14px 32px; background-color: #d97757; color: #ffffff; border-radius: 30px; font-weight: bold; text-decoration: none; font-size: 1.1rem; box-shadow: 0 4px 12px rgba(217, 119, 87, 0.25);">
-      Ver Lista de Mimos
-    </a>
+    <!-- 3. Novo Card de Presentes (Padronizado) -->
+    <div class="card text-center">
+      <h2>Prefere presentear com praticidade?</h2>
+      <p style="max-width: 700px; margin: 0 auto 24px auto;">
+        Se você preferir, preparamos uma lista online com algumas sugestões de presentes. Assim fica mais prático, sem precisar perder tempo pesquisando ou saindo para comprar.
+      </p>
+      <a href="loja.html" class="btn btn-mimos">Ver Lista de Mimos</a>
+    </div>
 
-  </div>
-</section>
-
-  </div>
-</section>
-
-    <!-- QUANDO E ONDE -->
-    <section class="card-papel">
+    <!-- 4. Quando e Onde -->
+    <div class="card">
       <h2>Quando e Onde</h2>
       
-      <div class="info-festa">
-        <div class="item-info">
-          <h3>Data</h3>
-          <p>21 de Novembro</p>
+      <div class="info-grid">
+        <div class="info-box">
+          <strong>Data</strong>
+          <span>21 de Novembro</span>
         </div>
-        <div class="item-info">
-          <h3>Horário</h3>
-          <p>Às 14</p>
-        </div>
-      </div>
-
-      <div class="item-info" style="margin-bottom:15px;">
-        <h3>Local da Festa</h3>
-        <p><strong>Fabrika da Alegria</strong><br>Av. São Miguel, 5541</p>
-      </div>
-
-      <!-- MAPA REAL DO GOOGLE -->
-      <iframe class="mapa-iframe" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3659.1824479133887!2d-46.4716839!3d-23.5016075!2m3!1f0!0f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce610eb6d68b6b%3A0x6d8f895c1a89c311!2sAv.%20S%C3%A3o%20Miguel%2C%205541%20-%20Vila%20Ponte%20Rasa%2C%20S%C3%A3o%20Paulo%20-%20SP%2C%2003871-100!5e0!3m2!1pt-BR!2sbr!4v1710000000000!5m2!1pt-BR!2sbr" allowfullscreen="" loading="lazy"></iframe>
-
-      <!-- BOTÕES DE GPS -->
-      <div class="grid-apps-gps">
-        <a href="https://waze.com/ul?q=Av.%20S%C3%A3o%20Miguel%2C%205541" target="_blank" class="btn-app-gps">
-          <img src="imgs/logo_waze.png" alt="Waze">
-          <span>WAZE</span>
-        </a>
-
-        <a href="https://maps.google.com/?q=Av.+S%C3%A3o+Miguel,+5541+-+Vila+Ponte+Rasa,+S%C3%A3o+Paulo+-+SP" target="_blank" class="btn-app-gps">
-          <img src="imgs/logo_maps.png" alt="Google Maps">
-          <span>MAPS</span>
-        </a>
-
-        <a href="https://m.uber.com/ul/?action=setPickup&pickup=my_location&dropoff[formatted_address]=Fabrika%20da%20Alegria%2C%20Av.%20S%C3%A3o%20Miguel%2C%205541%20-%20Vila%20Ponte%20Rasa%2C%20S%C3%A3o%20Paulo%20-%20SP" target="_blank" class="btn-app-gps">
-          <img src="imgs/logo_uber.png" alt="Uber">
-          <span>UBER</span>
-          </a>
-      </div>
-    </section>
-
-    <!-- DICAS ÚTEIS PARA OS CONVIDADOS -->
-    <section class="card-papel">
-      <h2>Dicas Importantes</h2>
-      <div class="grid-faq">
-        <div class="item-faq">
-          <h3>Estacionamento</h3>
-          <p>O local não possui estacionamento próprio, mas é possível estacionar com facilidade nas vias ao redor do salão ou utilizar carros de aplicativo.</p>
-        </div>
-        <div class="item-faq">
-          <h3>Confirmação de Crianças</h3>
-          <p>No formulário de presença, lembre-se de incluir as crianças como acompanhantes para que possamos organizar tudo com muito carinho.</p>
+        <div class="info-box">
+          <strong>Horário</strong>
+          <span>Às 14h</span>
         </div>
       </div>
-    </section>
 
-    <!-- RSVP -->
-    <section id="confirmar" class="card-papel">
-      <h2>Confirmar Presença</h2>
-      <p>Sua presença é essencial para deixar nosso dia ainda mais feliz! Por favor, confirme com antecedência.</p>
-      
-      <a href="https://forms.gle/nRa2NqFaWHo2DeGG6" target="_blank" class="btn-afetivo btn-rsvp">
-        Confirmar Presença no Google Form
-      </a>
-    </section>
+      <div class="info-box" style="margin-bottom: 20px;">
+        <strong>Local da Festa</strong>
+        <span>Fabrika da Alegria</span><br>
+        <small style="color: #888;">Av. São Miguel, 5541</small>
+      </div>
+
+      <div class="mapa-container">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3658.2619728285516!2d-46.48123282376171!3d-23.52219756018151!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce61491cf153a7%3A0x7d94924b13a1168f!2sAv.%20S%C3%A3o%20Miguel%2C%205541%20-%20Vila%20Ponte%20Rasa%2C%20S%C3%A3o%20Paulo%20-%20SP!5e0!3m2!1spt-BR!2sbr!4v1700000000000!5m2!1spt-BR!2sbr" width="100%" height="280" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+      </div>
+    </div>
 
   </div>
 
   <script>
-    // DATA DO ANIVERSÁRIO: 21 DE NOVEMBRO ÀS 16:00
+    // Lógica da Contagem Regressiva
     const dataFesta = new Date("Nov 21, 2026 14:00:00").getTime();
 
-    const timer = setInterval(() => {
+    const timer = setInterval(function() {
       const agora = new Date().getTime();
-      const diferenca = dataFesta - agora;
+      const distancia = dataFesta - agora;
 
-      if (diferenca < 0) {
+      if (distancia < 0) {
         clearInterval(timer);
-        document.querySelector(".box-contador").innerHTML = "<p style='font-weight:700; color:var(--terracota); font-size:1.2rem;'>É hoje! Chegou o grande dia!</p>";
+        document.querySelector(".countdown").innerHTML = "<b>A festa começou!</b>";
         return;
       }
 
-      const dias = Math.floor(diferenca / (1000 * 60 * 60 * 24));
-      const horas = Math.floor((diferenca % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutos = Math.floor((diferenca % (1000 * 60 * 60)) / (1000 * 60));
-      const segundos = Math.floor((diferenca % (1000 * 60)) / 1000);
-
-      document.getElementById("dias").innerText = dias < 10 ? "0" + dias : dias;
-      document.getElementById("horas").innerText = horas < 10 ? "0" + horas : horas;
-      document.getElementById("minutos").innerText = minutos < 10 ? "0" + minutos : minutos;
-      document.getElementById("segundos").innerText = segundos < 10 ? "0" + segundos : segundos;
+      document.getElementById("dias").innerText = String(Math.floor(distancia / (1000 * 60 * 60 * 24))).padStart(2, '0');
+      document.getElementById("horas").innerText = String(Math.floor((distancia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
+      document.getElementById("minutos").innerText = String(Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
+      document.getElementById("segundos").innerText = String(Math.floor((distancia % (1000 * 60)) / 1000)).padStart(2, '0');
     }, 1000);
   </script>
+
 </body>
 </html>
