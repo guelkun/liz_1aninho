@@ -349,7 +349,7 @@
       <h2>Identificação e Recadinho</h2>
       <div class="campo-grupo">
         <label for="nome-convidado">Seu Nome / Família: <span style="color:var(--terracota-suave);">*</span></label>
-        <input type="text" id="nome-convidado" placeholder="Ex: Titia e Família">
+        <input type="text" id="nome-convidado" placeholder="Ex: Titia Ana e Família">
       </div>
 
       <div class="campo-grupo">
@@ -502,87 +502,11 @@
       return total;
     }
 
-    // INSIRA A TUA CHAVE DO WEB3FORMS AQUI:
-const WEB3FORMS_ACCESS_KEY = "SUA_ACCESS_KEY_AQUI"; 
-
-async function enviarNotificacaoEmail() {
-  const nome = document.getElementById('nome-convidado').value.trim();
-  const mensagem = document.getElementById('mensagem-liz').value.trim();
-  const total = obterTotalCarrinho();
-  
-  // Monta a lista de itens formatada
-  const itensNomes = carrinho.map(item => item.nome).join(', ');
-  const valorFormatado = 'R$ ' + total.toFixed(2).replace('.', ',');
-
-  const formData = new FormData();
-  formData.append("access_key", WEB3FORMS_ACCESS_KEY);
-  formData.append("subject", "Novo Presente Recebido para a Liz!");
-  formData.append("from_name", "Site da Liz");
-  
-  // Campos que aparecem no corpo do e-mail (conforme a foto do teu e-mail)
-  formData.append("Nome Convidado", nome);
-  formData.append("Itens Selecionados", itensNomes);
-  formData.append("Valor Total", valorFormatado);
-  formData.append("Mensagem", mensagem || "Sem mensagem enviada.");
-
-  try {
-    await fetch("https://api.web3forms.com/submit", {
-      method: "POST",
-      body: formData
-    });
-  } catch (error) {
-    console.error("Erro ao enviar notificação por e-mail:", error);
-  }
-}
-
-// Atualizamos a função dos botões para enviar o e-mail antes de abrir a modal
-async function abrirModalPix() {
-  if (!validarFormulario()) return;
-
-  const total = obterTotalCarrinho();
-  const valorFormatado = 'R$ ' + total.toFixed(2).replace('.', ',');
-
-  const instrucaoPix = document.getElementById('instrucao-pix');
-  if (instrucaoPix) {
-    instrucaoPix.innerHTML = `Escaneie o QR Code abaixo ou copie a chave aleatória informando o valor de <strong style="color:var(--terracota-suave);">${valorFormatado}</strong> referente aos mimos escolhidos:`;
-  }
-
-  // Dispara o e-mail via Web3Forms
-  enviarNotificacaoEmail();
-
-  const modal = document.getElementById('modal-pix');
-  if (modal) modal.classList.add('ativo');
-}
-
-async function abrirModalCartao() {
-  if (!validarFormulario()) return;
-
-  const total = obterTotalCarrinho();
-  const valorFormatado = 'R$ ' + total.toFixed(2).replace('.', ',');
-
-  const instrucaoCartao = document.getElementById('instrucao-valor-cartao');
-  if (instrucaoCartao) {
-    instrucaoCartao.innerHTML = `Ao abrir o link, digite o valor de <strong>${valorFormatado}</strong> (valor dos mimos escolhidos).`;
-  }
-
-  const select = document.getElementById('select-parcelamento');
-  select.innerHTML = '';
-
-  for (let i = 1; i <= 18; i++) {
-    const option = document.createElement('option');
-    option.value = i;
-    option.innerText = i === 1 ? '1x À vista (sem acréscimo)' : `${i}x no Cartão`;
-    select.appendChild(option);
-  }
-
-  calcularSimulacaoCartao();
-
-  // Dispara o e-mail via Web3Forms
-  enviarNotificacaoEmail();
-
-  const modal = document.getElementById('modal-cartao');
-  if (modal) modal.classList.add('ativo');
-}
+    function validarFormulario() {
+      if (carrinho.length === 0) {
+        exibirToast("Escolha ao menos um mimo na lojinha!");
+        return false;
+      }
 
       const inputNome = document.getElementById('nome-convidado');
       const nomeDigitado = inputNome ? inputNome.value.trim() : '';
