@@ -349,7 +349,7 @@
       <h2>Identificação e Recadinho</h2>
       <div class="campo-grupo">
         <label for="nome-convidado">Seu Nome / Família: <span style="color:var(--terracota-suave);">*</span></label>
-        <input type="text" id="nome-convidado" placeholder="Ex: Titia Ana e Família">
+        <input type="text" id="nome-convidado" placeholder="Ex: Titia e Família">
       </div>
 
       <div class="campo-grupo">
@@ -423,6 +423,9 @@
   <div id="toast" class="toast-notificacao">Chave Pix copiada com sucesso!</div>
 
   <script>
+    // CHAVE PÚBLICA DO WEB3FORMS PARA ENVIO DE E-MAILS
+    const WEB3FORMS_ACCESS_KEY = "867f41a9-89b5-49de-92a5-4cf1fece583b";
+
     let carrinho = JSON.parse(localStorage.getItem('carrinhoLiz')) || [];
 
     // TABELA DE TAXAS DO CLIENTE MERCADO PAGO
@@ -523,7 +526,35 @@
       return true;
     }
 
-    function abrirModalPix() {
+    async function enviarNotificacaoEmail() {
+      const nome = document.getElementById('nome-convidado').value.trim();
+      const mensagem = document.getElementById('mensagem-liz').value.trim();
+      const total = obterTotalCarrinho();
+      
+      const itensNomes = carrinho.map(item => item.nome).join(', ');
+      const valorFormatado = 'R$ ' + total.toFixed(2).replace('.', ',');
+
+      const formData = new FormData();
+      formData.append("access_key", WEB3FORMS_ACCESS_KEY);
+      formData.append("subject", "Novo Presente Recebido para a Liz!");
+      formData.append("from_name", "Site da Liz");
+      
+      formData.append("Nome Convidado", nome);
+      formData.append("Itens Selecionados", itensNomes);
+      formData.append("Valor Total", valorFormatado);
+      formData.append("Mensagem", mensagem || "Sem mensagem enviada.");
+
+      try {
+        await fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          body: formData
+        });
+      } catch (error) {
+        console.error("Erro ao enviar notificação por e-mail:", error);
+      }
+    }
+
+    async function abrirModalPix() {
       if (!validarFormulario()) return;
 
       const total = obterTotalCarrinho();
@@ -534,11 +565,14 @@
         instrucaoPix.innerHTML = `Escaneie o QR Code abaixo ou copie a chave aleatória informando o valor de <strong style="color:var(--terracota-suave);">${valorFormatado}</strong> referente aos mimos escolhidos:`;
       }
 
+      // Dispara o e-mail via Web3Forms
+      enviarNotificacaoEmail();
+
       const modal = document.getElementById('modal-pix');
       if (modal) modal.classList.add('ativo');
     }
 
-    function abrirModalCartao() {
+    async function abrirModalCartao() {
       if (!validarFormulario()) return;
 
       const total = obterTotalCarrinho();
@@ -560,6 +594,9 @@
       }
 
       calcularSimulacaoCartao();
+
+      // Dispara o e-mail via Web3Forms
+      enviarNotificacaoEmail();
 
       const modal = document.getElementById('modal-cartao');
       if (modal) modal.classList.add('ativo');
