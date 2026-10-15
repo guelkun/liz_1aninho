@@ -11,6 +11,29 @@
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
+    .info-explicativa-pagamento {
+      background: #FDF1ED;
+      border: 1px solid #F0DAD3;
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 20px;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: var(--texto);
+    }
+
+    .info-explicativa-pagamento p {
+      margin-bottom: 8px;
+    }
+
+    .info-explicativa-pagamento p:last-child {
+      margin-bottom: 0;
+    }
+
+    .info-explicativa-pagamento strong {
+      color: var(--terracota-suave);
+    }
+
     :root {
       --bg-aquarela: #FDF6F0;
       --papel-card: #FFFDF9;
@@ -360,6 +383,12 @@
 
     <section class="card-papel">
       <h2>Forma de Pagamento</h2>
+
+      <div class="info-explicativa-pagamento">
+        <p><strong>Pagamentos à vista (Pix ou 1x no Cartão):</strong> Isentos de qualquer taxa adicional. O valor final é exatamente o total dos mimos selecionados.</p>
+        <p><strong>Pagamento parcelado no Cartão:</strong> Em caso de parcelamento, incidem taxas de processamento da operadora de pagamento (Mercado Pago). Você poderá simular o valor exato das parcelas antes de finalizar a escolha.</p>
+      </div>
+
       <div class="opcoes-pagamento">
         <button class="btn-pagamento btn-pix" onclick="abrirModalPix()">Pagar via Pix (Sem Taxa)</button>
         <button class="btn-pagamento btn-cartao" onclick="abrirModalCartao()">Pagar no Cartão (Mercado Pago)</button>
